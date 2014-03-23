@@ -16,10 +16,10 @@
 
 import com.brandseye.cors.CorsCompatibleBasicAuthenticationEntryPoint
 import com.brandseye.cors.CorsFilter
-import org.codehaus.groovy.grails.commons.ConfigurationHolder as CH
+import grails.util.Holders
 
 class CorsGrailsPlugin {
-    def version = "1.1.4"
+    def version = "1.1.5"
     def grailsVersion = "2.0 > *"
     def title = "CORS Plugin"
     def author = "David Tinker"
@@ -38,9 +38,9 @@ class CorsGrailsPlugin {
     def doWithSpring = {
         // If using Spring Security's Basic Auth, swap out the BasicAuthenticationEntryPoint bean to prevent
         // authenticating on OPTIONS requests. See https://github.com/davidtinker/grails-cors/issues/12 for more info.
-        if (CH.config.grails.plugins.springsecurity?.useBasicAuth) {
+        if (Holders.config.grails.plugins.springsecurity?.useBasicAuth) {
             basicAuthenticationEntryPoint(CorsCompatibleBasicAuthenticationEntryPoint) { bean ->
-                realmName = CH.config.grails.plugins.springsecurity.basic.realmName
+                realmName = Holders.config.grails.plugins.springsecurity.basic.realmName
             }
         }
     }

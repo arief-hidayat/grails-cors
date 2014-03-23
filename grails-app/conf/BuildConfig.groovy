@@ -21,11 +21,21 @@ grails.project.dependency.resolution = {
     log "warn"
 
     repositories {
+        grailsPlugins()
+        grailsHome()
+        mavenLocal()
         grailsCentral()
+        mavenCentral()
     }
 
     dependencies {
-        test ":grails-test-suite-base:$grailsVersion"
+//        test ":grails-test-suite-base:$grailsVersion"  // no version for 2.4.x
+test ("org.grails:grails-test-suite-base:2.2.5") {
+ excludes 'grails-spring', 'grails-test', 'grails', 'grails-bootstrap', 'groovy-all'
+}
+	test "org.grails:grails-spring:$grailsVersion"
+	test "org.grails:grails-test:$grailsVersion"
+	
         compile('org.springframework.security:spring-security-core:3.0.7.RELEASE') {
             transitive = false
         }
@@ -36,7 +46,7 @@ grails.project.dependency.resolution = {
 
     plugins {
         compile ":webxml:1.4.1"
-        build(":release:2.0.4", ":rest-client-builder:1.0.2") {
+        build(":release:3.0.1", ":rest-client-builder:1.0.3") {
             export = false
         }
     }
